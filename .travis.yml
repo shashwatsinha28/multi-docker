@@ -1,0 +1,16 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t shashs28/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run shashs28/react-test npm run test -- --coverage
+
+after_success:
+  - docker build -t shashs28/multi-client ./client
+  - docker build -t shashs28/multi-nginx ./nginx
+  - docker build -t shashs28/multi-server ./server
+  - docker build -t shashs28/multi-worker ./worker
