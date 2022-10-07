@@ -14,3 +14,10 @@ after_success:
   - docker build -t shashs28/multi-nginx ./nginx
   - docker build -t shashs28/multi-server ./server
   - docker build -t shashs28/multi-worker ./worker
+  # Login to docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take images in last step and push to docker hub
+  - docker push shashs28/multi-client
+  - docker push shashs28/multi-nginx
+  - docker push shashs28/multi-server
+  - docker push shashs28/multi-worker
